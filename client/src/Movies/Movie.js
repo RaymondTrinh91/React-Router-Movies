@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import MovieCard from './MovieCard';
 
@@ -21,12 +22,12 @@ console.log(props.match.params.dataID);
           console.error(error);
         });
 
-  },[]);
+  },[props.match.params.dataID]);
   
   // Uncomment this only when you have moved on to the stretch goals
   const saveMovie = () => {
     const addToSavedList = props.addToSavedList;
-    addToSavedList(movie)
+    addToSavedList(movie);
   }
 
   if (!movie) {

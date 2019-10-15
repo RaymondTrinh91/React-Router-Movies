@@ -17,11 +17,15 @@ console.log(props.location);
       <SavedList list={savedList} />
       <Route 
         exact path='/' 
-        render={props => <MovieList {...props}/>}
+        render={props => 
+          <MovieList {...props}/>}
         />
       <Route 
         path='/movie/:dataID' 
-        render={props => <Movie {...props} addToSavedList={addToSavedList}/>}
+        render={props => 
+          <Movie 
+            {...props} 
+            addToSavedList={addToSavedList}/>}
         />
     </div>
   );
