@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import MovieCard from './MovieCard';
 
 const Movie = (props) => {
-  const [movie, setMovie] = useState({});
- 
+  const [movie, setMovie] = useState();
+
   useEffect(() => {
-    const id = 1;
+    const id = Number(props.match.params.dataID);
+
+console.log(props.match.params.dataID);
     // change ^^^ that line and grab the id from the URL
     // You will NEED to add a dependency array to this effect hook
 
@@ -18,38 +22,24 @@ const Movie = (props) => {
           console.error(error);
         });
 
-  },[]);
+  },[props.match.params.dataID]);
   
   // Uncomment this only when you have moved on to the stretch goals
-  // const saveMovie = () => {
-  //   const addToSavedList = props.addToSavedList;
-  //   addToSavedList(movie)
-  // }
+  const saveMovie = () => {
+    const addToSavedList = props.addToSavedList;
+    addToSavedList(movie);
+  }
 
   if (!movie) {
     return <div>Loading movie information...</div>;
   }
 
   const { title, director, metascore, stars } = movie;
+  console.log(movie);
   return (
     <div className="save-wrapper">
-      <div className="movie-card">
-        <h2>{title}</h2>
-        <div className="movie-director">
-          Director: <em>{director}</em>
-        </div>
-        <div className="movie-metascore">
-          Metascore: <strong>{metascore}</strong>
-        </div>
-        <h3>Actors</h3>
-
-        {stars.map(star => (
-          <div key={star} className="movie-star">
-            {star}
-          </div>
-        ))}
-      </div>
-      <div className="save-button">Save</div>
+      <MovieCard key={movie.id} title={title} director={director} metascore={metascore} stars={stars}/>
+      <div onClick={()=>saveMovie()} className="save-button">Save</div>
     </div>
   );
 }
